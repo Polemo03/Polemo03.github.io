@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css" /><!--第3題 請見style.css-->
+    <title>Browser</title>
+</head>
+
+<body>
+    <p id="desc"><!--第1題 "在網頁中以文字說明遊戲規則"-->
+        在網頁上自行輸入 3 個號碼 (範圍是數字 1~10 不重複)<br>
+        每次開始遊戲時會亂數產生 3 個得獎號碼 (範圍是數字 1~10 不重複）<br>
+        當輸入 3 個號碼並按下開獎按鈕後，會開始比對輸入的號碼及得獎號碼 (不管排列先後順序)<br>
+        全部對中時為頭獎、2 個號碼對中為貳獎、1 個號碼對中為參獎<br>
+        此行展示hover特效uwu
+    </p>
+    <div id="game_area"><!--第1題-->
+        <button type="button" onclick="game()">Start!</button>
+        <p id="inputs"></p>
+        <p id="guessButton"></p>
+        <button type="button" onclick="resetGame(1)">Reset</button> <!--第4題-->
+        <p id="yourNumbers"></p>
+        <p id="scriptGeneratedNumbers"></p>
+        <p id="result"></p>
+        
+    </div>
+
+</body>
+
+<!--第1題 JS-->
+<script language="javascript">
+    let x = 0;
+    let y = 0;
+    let z = 0;
+    function game() {
+        resetGame(1);
+        document.getElementById("guessButton").innerHTML = "<button type=\"button\" onclick=\"guess()\">Guess!</button>";
+        document.getElementById("inputs").innerHTML = "<input type=\"number\" min=\"1\" max=\"10\" id=\"guess1\">\n<input type=\"number\" min=\"1\" max=\"10\" id=\"guess2\">\n<input type=\"number\" min=\"1\" max=\"10\" id=\"guess3\">";
+    }
+    function guess()
+    {
+        let guess1 = document.getElementById("guess1").value;
+        let guess2 = document.getElementById("guess2").value;
+        let guess3 = document.getElementById("guess3").value;
+
+        //第5題
+        document.getElementById("yourNumbers").innerHTML = "你猜的號碼為: " + guess1 + ", " + guess2 + ", " + guess3;
+        if(guess1 == null) {document.getElementById("scriptGeneratedNumbers").innerHTML ="第一格為空!"; resetGame(0); return 0;}
+        if(guess1 < 1 || guess1 > 10) {document.getElementById("scriptGeneratedNumbers").innerHTML ="第一格不符合規定!"; resetGame(0); return 0;}
+        if(guess2 == null) {document.getElementById("scriptGeneratedNumbers").innerHTML ="第二格為空!"; resetGame(0); return 0;}
+        if(guess2 < 1 || guess2 > 10) {document.getElementById("scriptGeneratedNumbers").innerHTML ="第二格不符合規定!"; resetGame(0); return 0;}
+        if(guess2 == guess1) {document.getElementById("scriptGeneratedNumbers").innerHTML ="第二格重複數字!"; resetGame(0); return 0;}
+        if(guess2 == null) {document.getElementById("scriptGeneratedNumbers").innerHTML ="第三格為空!"; resetGame(0); return 0;}
+        if(guess2 < 1 || guess2 > 10) {document.getElementById("scriptGeneratedNumbers").innerHTML ="第三格不符合規定!"; resetGame(0); return 0;}
+        if(guess3 == guess1 || guess3 == guess2) {document.getElementById("scriptGeneratedNumbers").innerHTML ="第三格重複數字!"; resetGame(0); return 0;}
+
+        
+        document.getElementById("scriptGeneratedNumbers").innerHTML = "開出號碼為: " + x + ", " + y + ", " + z;
+
+        let prize = 0;
+        if(guess1 == x || guess1 == y || guess1 == z) {prize++;}
+        if(guess2 == x || guess2 == y || guess2 == z) {prize++;}
+        if(guess3 == x || guess3 == y || guess3 == z) {prize++;}
+        switch(prize) //第2題
+        {
+            case 0:
+                document.getElementById("result").innerHTML = "手氣不好，請再加油";
+                break;
+            case 1:
+                document.getElementById("result").innerHTML = "得到參獎69420元!";
+                break;
+            case 2:
+                document.getElementById("result").innerHTML = "得到貳獎114514元!";
+                break;
+            case 3:
+                document.getElementById("result").innerHTML = "得到頭獎1919810元!";
+                break;
+        }
+        document.getElementById("guessButton").innerHTML = "";
+    }
+    function resetGame(n) //第4題 JS
+    {
+        if (n == 1)
+        {
+            document.getElementById("yourNumbers").innerHTML="";
+            document.getElementById("scriptGeneratedNumbers").innerHTML="";
+        }
+        document.getElementById("guessButton").innerHTML = "";
+        document.getElementById("inputs").innerHTML = "";
+        document.getElementById("result").innerHTML="遊戲已重設!";
+
+        x = Math.floor((Math.random() * 10) + 1);
+        do {
+            y = Math.floor((Math.random() * 10) + 1);
+        } while (y == x);
+        do {
+            z = Math.floor((Math.random() * 10) + 1);
+        } while (z == x || z == y);
+    }
+</script>
+
+</html>

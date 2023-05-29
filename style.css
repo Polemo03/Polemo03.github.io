@@ -1,0 +1,27 @@
+body {
+  margin: 20px;
+}
+#desc:hover
+{
+  text-transform: uppercase;
+}
+
+#result:hover
+{
+  border: 10px dotted blue;
+}
+
+#yourNumbers:hover
+{
+  letter-spacing: 10px;
+}
+
+#scriptGeneratedNumbers:hover
+{
+  text-decoration:underline;
+}
+
+#game_area:hover
+{
+  background-color: chartreuse;
+}
